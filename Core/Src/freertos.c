@@ -30,7 +30,6 @@
 
 /* Private typedef -----------------------------------------------------------*/
 typedef StaticTask_t osStaticThreadDef_t;
-typedef StaticQueue_t osStaticMessageQDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -68,17 +67,6 @@ const osThreadAttr_t appMain_attributes = {
   .stack_size = sizeof(appMainBuffer),
   .priority = (osPriority_t) osPriorityLow,
 };
-/* Definitions for keyQueue */
-osMessageQueueId_t keyQueueHandle;
-uint8_t keyQueueBuffer[ 16 * sizeof( key_msg ) ];
-osStaticMessageQDef_t keyQueueControlBlock;
-const osMessageQueueAttr_t keyQueue_attributes = {
-  .name = "keyQueue",
-  .cb_mem = &keyQueueControlBlock,
-  .cb_size = sizeof(keyQueueControlBlock),
-  .mq_mem = &keyQueueBuffer,
-  .mq_size = sizeof(keyQueueBuffer)
-};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -111,10 +99,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
-
-  /* Create the queue(s) */
-  /* creation of keyQueue */
-  keyQueueHandle = osMessageQueueNew (16, sizeof(key_msg), &keyQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
