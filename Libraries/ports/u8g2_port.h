@@ -2,7 +2,7 @@
 #include "u8g2.h"
 
 //! RTOS
-#if CONFIG_BSP_USE_CMSIS_RTOS2==1
+#ifdef USE_FREERTOS
 #include "cmsis_os2.h"
 #include "freertos.h"
 #include "task.h"

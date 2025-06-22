@@ -1,31 +1,50 @@
 #include "scs_port_stm32_hal_hw_uart.h"
 
-#if CONFIG_BSP_USE_CMSIS_RTOS2
+#ifdef USE_FREERTOS
 #include "cmsis_os2.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #endif
 
-extern UART_HandleTypeDef huart6; // 8n1 500000 baud
+/**
+ * @param baudrate 1000000
+ * @param wordLength 8
+ * @param stopBits 1
+ * @param parity none
+ * @param mode tx/rx
+ * @param hwFlowCtl none
+ */
+extern UART_HandleTypeDef huart6;
 
 void ftUart_Send(uint8_t *nDat, int nLen)
 {
+#ifdef USE_FREERTOS
+  taskENTER_CRITICAL();
+  HAL_UART_Transmit(&huart6, nDat, nLen, 100);
+  taskEXIT_CRITICAL();
+#else
   HAL_UART_Transmit(&huart6, nDat, nLen, HAL_MAX_DELAY);
+#endif
 }
 
 int ftUart_Read(uint8_t *nDat, int nLen)
 {
-  // HAL_UART_Receive(&huart6, nDat, nLen, HAL_MAX_DELAY);
   uint16_t rxLen = 0;
-  HAL_UARTEx_ReceiveToIdle(&huart6, nDat, nLen, &rxLen, HAL_MAX_DELAY);
-  return rxLen; // Return the number of bytes read
+#ifdef USE_FREERTOS
+  taskENTER_CRITICAL();
+  HAL_UARTEx_ReceiveToIdle(&huart6, nDat, nLen, &rxLen, 100);
+  taskEXIT_CRITICAL();
+#else
+  HAL_UARTEx_ReceiveToIdle(&huart6, nDat, nLen, &rxLen, 100);
+#endif
+  return rxLen;
 }
 
 void ftBus_Delay(void)
 {
-  #if CONFIG_BSP_USE_CMSIS_RTOS2
-  osDelay(1); // Delay for 1 millisecond using CMSIS-RTOS2
-  #else
-  HAL_Delay(1); // Delay for 1 millisecond using HAL
-  #endif
+#ifdef USE_FREERTOS
+  osDelay(1);
+#else
+  HAL_Delay(1);
+#endif
 }

@@ -42,7 +42,13 @@ add_subdirectory(cmake/stm32cubemx)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined library search paths
+    # Add user defined library seUSE_FREE_RTOSarch paths
+)
+
+#添加预定义宏
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+    # Add user defined macros
+    USE_FREERTOS
 )
 
 #添加Librarie源文件
@@ -58,11 +64,12 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     Libraries
-    Libraries/basic
+    Libraries/bsp
     Libraries/elog
     Libraries/ports
     Libraries/quad
     Libraries/SCSLib
+    Libraries/stm32utils
     Libraries/u8g2
 )
 

@@ -3,7 +3,7 @@
 #include "elog.h"
 #include "u8g2.h"
 #include "main.h"
-#include "bsp_cfg.h"
+
 #include "u8g2_port.h"
 
 #define TAG "u8g2 port"
@@ -255,7 +255,7 @@ uint8_t u8x8_byte(U8X8_UNUSED u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *
     case U8X8_MSG_BYTE_SEND:
     {
 
-#if CONFIG_BSP_USE_CMSIS_RTOS2==1
+#ifdef USE_FREERTOS
       HAL_StatusTypeDef status = HAL_SPI_Transmit(&hspi1, arg_ptr, arg_int, HAL_MAX_DELAY);
       if (status != HAL_OK) {
         elog_e(TAG, "HAL_SPI_Transmit failed, status: %d", status);

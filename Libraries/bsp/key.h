@@ -1,8 +1,8 @@
 #pragma once
 
-#include "bsp_cfg.h"
 
-#if CONFIG_BSP_USE_CMSIS_RTOS2==1
+
+#ifdef USE_FREERTOS
 #include "cmsis_os2.h"
 #include "FreeRTOS.h"
 #include "task.h"

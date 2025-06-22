@@ -28,10 +28,10 @@
  
 #include <elog.h>
 
-#include "bsp_cfg.h"
+#include "stm32f4xx_hal.h"
 extern UART_HandleTypeDef huart2;
 
-#if CONFIG_BSP_USE_CMSIS_RTOS2==1
+#ifdef USE_FREERTOS
 #include "cmsis_os2.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -70,7 +70,7 @@ void elog_port_deinit(void) {
 void elog_port_output(const char *log, size_t size) {
     
     /* add your code here */
-    #if CONFIG_BSP_USE_CMSIS_RTOS2==1
+    #ifdef USE_FREERTOS==1
     uint32_t BASEPRI = taskENTER_CRITICAL_FROM_ISR();
     HAL_UART_Transmit(&huart2, (uint8_t *)log, size, HAL_MAX_DELAY);
     taskEXIT_CRITICAL_FROM_ISR(BASEPRI);

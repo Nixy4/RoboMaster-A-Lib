@@ -3,7 +3,7 @@
 
 #include "led.h"
 
-#if CONFIG_BSP_USE_CMSIS_RTOS2==1
+#ifdef USE_FREERTOS
 #include "cmsis_os2.h"
 #endif
 
@@ -53,7 +53,7 @@ void led_test(void)
   {
     led_ctrl(i, LED_ON);
     
-#if CONFIG_BSP_USE_CMSIS_RTOS2
+#ifdef USE_FREERTOS
     osDelay(100);
 #else
     HAL_Delay(100);
