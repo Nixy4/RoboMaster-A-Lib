@@ -2,5 +2,6 @@
   "files.associations": {
     "cmsis_os2.h": "c",
     "stm32f4xx_hal.h": "c"
-  }
+  },
+  "cmake.cmakePath": "cmake"
 }

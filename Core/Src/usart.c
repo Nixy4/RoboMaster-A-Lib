@@ -76,7 +76,7 @@ void MX_USART6_UART_Init(void)
   huart6.Init.Mode = UART_MODE_TX_RX;
   huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   huart6.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart6) != HAL_OK)
+  if (HAL_HalfDuplex_Init(&huart6) != HAL_OK)
   {
     Error_Handler();
   }
@@ -125,10 +125,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     __HAL_RCC_GPIOG_CLK_ENABLE();
     /**USART6 GPIO Configuration
     PG14     ------> USART6_TX
-    PG9     ------> USART6_RX
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_14|GPIO_PIN_9;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pin = GPIO_PIN_14;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF8_USART6;
@@ -171,9 +170,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
     /**USART6 GPIO Configuration
     PG14     ------> USART6_TX
-    PG9     ------> USART6_RX
     */
-    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_14|GPIO_PIN_9);
+    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_14);
 
   /* USER CODE BEGIN USART6_MspDeInit 1 */
 
