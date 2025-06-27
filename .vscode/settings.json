@@ -1,7 +1,8 @@
 {
   "files.associations": {
     "cmsis_os2.h": "c",
-    "stm32f4xx_hal.h": "c"
+    "stm32f4xx_hal.h": "c",
+    "iostream": "cpp"
   },
   "cmake.cmakePath": "cmake"
 }

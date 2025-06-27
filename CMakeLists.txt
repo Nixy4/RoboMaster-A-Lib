@@ -42,7 +42,7 @@ add_subdirectory(cmake/stm32cubemx)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined library seUSE_FREE_RTOSarch paths
+    # Add user defined library search paths
 )
 
 #添加预定义宏
